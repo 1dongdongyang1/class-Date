@@ -5,9 +5,10 @@ using namespace std;
 class Date
 {
 public:
-	int GetMonthDay(int year, int month)
+	int GetMonthDay(int year, int month)	//获取相关月份的天数
 	{
 		int MonthDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+		//闰年
 		if (month == 2 && ((year % 4 == 0 && year % 100 != 0) || year % 400 == 0))
 			return 29;
 		return MonthDays[month];
@@ -15,6 +16,7 @@ public:
 
 	Date(int year = 0, int month = 1, int day = 1)
 	{
+		//判断日期是否合法
 		if (year >= 0
 			&& month >= 1 && month <= 12
 			&& day >= 1 && day <= GetMonthDay(year, month))
@@ -27,14 +29,15 @@ public:
 			cout << "非法日期" << endl;
 	}
 
-	Date(const Date& d)
+	Date(const Date& d)	//拷贝构造函数
 	{
 		_year = d._year;
 		_month = d._month;
 		_day = d._day;
 	}
 
-	bool operator<(const Date& d)
+	//运算符重载
+	bool operator<(const Date& d)	
 	{
 		if (_year < d._year)
 			return true;
