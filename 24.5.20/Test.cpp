@@ -74,7 +74,7 @@ public:
 		return !(*this == d);
 	}
 
-	Date operator+(int day)
+	/*Date operator+(int day)
 	{
 		Date ret(*this);
 		ret._day += day;
@@ -92,10 +92,20 @@ public:
 		}
 
 		return ret;
+	}*/
+
+	Date operator+(int day)		//复用
+	{
+		Date ret(*this);
+		ret += day;
+		return ret;
 	}
 
 	Date& operator+=(int day)
 	{
+		if (day < 0)
+			return *this -= -day;
+
 		_day += day;
 		while (_day > GetMonthDay(_year, _month))
 		{
@@ -106,6 +116,97 @@ public:
 				_year++;
 				_month = 1;
 			}
+		}
+		
+		return *this;
+	}
+
+	/*Date operator-(int day)
+	{
+		Date ret(*this);
+		ret._day -= day;
+
+		while (ret._day <= 0)
+		{
+			ret._month--;
+			if (ret._month == 0)
+			{
+				ret._year--;
+				ret._month = 12;
+			}
+			ret._day += GetMonthDay(ret._year, ret._month);
+		}
+
+		return ret;
+	}*/
+
+	Date operator-(int day)
+	{
+		Date ret(*this);
+		ret -= day;
+		return ret;
+	}
+
+	Date& operator-=(int day)
+	{
+		if (day < 0)
+			return *this += -day;
+
+		_day -= day;
+		while (_day <= 0)
+		{
+			_month--;
+			if (_month == 0)
+			{
+				_year--;
+				_month = 12;
+			}
+			_day += GetMonthDay(_year, _month);
+		}
+
+		return *this;
+	}
+
+	//	++d 前置++
+	Date& operator++()
+	{
+		*this += 1;
+		return *this;	//返回加之后的值
+	}
+
+	//	d++ 后置++
+	Date operator++(int)	//为了构成函数重载
+	{
+		Date tmp(*this);
+		*this += 1;
+		return tmp;		//返回加之前的值
+	}
+
+	//	--d 前置--
+	Date& operator--()
+	{
+		*this -= 1;
+		return *this;
+	}
+
+	//	d-- 后置--
+	Date operator--(int)
+	{
+		Date tmp(*this);
+		*this -= 1;
+		return tmp;
+	}
+
+	//赋值运算符重载
+	//运算符重载是为了让自定义类型可以像内置类型一样去使用运算符
+	//自定义类型在传参数和返回值时，在可以的情况下，尽量使用引用，减少拷贝
+	Date& operator=(const Date& d)
+	{
+		if (this != &d)		//针对自己给自己赋值的判断检查
+		{
+			_year = d._year;
+			_month = d._month;
+			_day = d._day;
 		}
 		
 		return *this;
@@ -124,10 +225,13 @@ private:
 int main()
 {
 	Date d1(2020, 4, 11);
-	
-	Date d4 = d1 + 100;
-	d4.Print();
-	d1 += 10;
-	d1.Print();
+	Date d2;
+	Date d3;
+
+	d2 = d1 + -10;
+	d2.Print();
+
+	d3 = d1 - 10;
+	d3.Print();
 	return 0;
 }
