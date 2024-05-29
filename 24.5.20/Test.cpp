@@ -212,6 +212,28 @@ public:
 		return *this;
 	}
 
+	int operator-(const Date& d)
+	{
+		int flag = 1;
+		Date max = *this;	//øΩ±¥ππ‘Ï
+		Date min = d;
+		if (*this < d)
+		{
+			max = d;		//operator=
+			min = *this;
+			flag = -1;
+		}
+
+		int n = 0;
+		while (min != max)
+		{
+			++min;
+			++n;
+		}
+
+		return n*flag;
+	}
+
 	void Print()
 	{
 		cout << _year << "." << _month << "." << _day << endl;
