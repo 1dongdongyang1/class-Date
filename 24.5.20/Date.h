@@ -7,7 +7,7 @@ using namespace std;
 class Date
 {
 public:
-	int GetMonthDay(int year, int month);
+	int GetMonthDay(int year, int month) const;
 	Date(int year = 0, int month = 1, int day = 1);
 	Date(const Date& d);
 	bool operator<(const Date& d) const;

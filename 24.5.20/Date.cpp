@@ -1,7 +1,7 @@
 #include"Date.h"
 
 //获取相关月份的天数
-int Date::GetMonthDay(int year, int month)
+int Date::GetMonthDay(int year, int month) const
 {
 	int MonthDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
 	//闰年
